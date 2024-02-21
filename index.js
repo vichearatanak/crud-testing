@@ -1,5 +1,4 @@
 const express = require('express');
-const fs = require('fs');
 const app = express();
 
 app.use(express.json());
@@ -23,9 +22,9 @@ function readData() {
 }
 
 // Write data to JSON file
-function writeData(data) {
-    fs.writeFileSync('data.json', JSON.stringify(data, null, 4));
-}
+// function writeData(data) {
+//     fs.writeFileSync('data.json', JSON.stringify(data, null, 4));
+// }
 
 // CRUD operations
 
@@ -37,41 +36,24 @@ app.get('/', (req, res) => {
 
 // Get item by id
 app.get('/:id', (req, res) => {
-    const data = readData();
-    const item = data.find(item => item.id === parseInt(req.params.id));
-    if (!item) return res.status(404).send('Item not found');
-    res.json(item);
+    // const data = readData();
+    // const item = data.find(item => item.id === parseInt(req.params.id));
+    // if (!item) return res.status(404).send('Item not found');
+    res.json('get by id');
 });
 
 // Create a new item
 app.post('/', (req, res) => {
-    const data = readData();
-    const newItem = req.body;
-    data.push(newItem);
-    writeData(data);
-    res.status(201).json(newItem);
+    res.status(201).json('post');
 });
 
 // Update an existing item
 app.put('/:id', (req, res) => {
-    const data = readData();
-    const itemId = parseInt(req.params.id);
-    const updatedItem = req.body;
-    const index = data.findIndex(item => item.id === itemId);
-    if (index === -1) return res.status(404).send('Item not found');
-    data[index] = { ...data[index], ...updatedItem };
-    writeData(data);
-    res.json(data[index]);
+    res.json(updated);
 });
 
 // Delete an item
 app.delete('/:id', (req, res) => {
-    const data = readData();
-    const itemId = parseInt(req.params.id);
-    const index = data.findIndex(item => item.id === itemId);
-    if (index === -1) return res.status(404).send('Item not found');
-    data.splice(index, 1);
-    writeData(data);
     res.send('Item deleted successfully');
 });
 
